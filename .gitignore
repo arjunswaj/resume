@@ -1,0 +1,9 @@
+# Compiled output
+*.pdf
+*.aux
+*.log
+*.out
+*.toc
+
+# Other temporary files
+*.synctex.gz
