@@ -1,9 +1,10 @@
 # Compiled output
-*.pdf
 *.aux
 *.log
 *.out
 *.toc
+*.fdb_latexmk
+*.fls
 
 # Other temporary files
 *.synctex.gz

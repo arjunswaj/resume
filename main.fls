@@ -293,6 +293,10 @@ INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/fontawesome5/ufontawesomefree
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/fontawesome5/ufontawesomefree1.fd
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/fontawesome5/ufontawesomefree1.fd
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/fontawesome5/fa5free1regular.tfm
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/fontawesome5/ufontawesomebrands0.fd
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/fontawesome5/ufontawesomebrands0.fd
+INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/fontawesome5/ufontawesomebrands0.fd
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/fontawesome5/fa5brands0.tfm
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT ./sections/experience.tex
 INPUT ./sections/experience.tex
@@ -322,10 +326,12 @@ INPUT /usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
 INPUT /usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/fontawesome5/fa5free2.enc
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/fontawesome5/fa5free1.enc
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/fontawesome5/fa5brands0.enc
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/fontawesome5/fa5free0.enc
 INPUT main.aux
 INPUT ./main.out
 INPUT ./main.out
+INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/fontawesome5/FontAwesome5Brands-Regular.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/fontawesome5/FontAwesome5Free-Regular.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/fontawesome5/FontAwesome5Free-Solid.pfb
 INPUT /usr/local/texlive/2024/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
