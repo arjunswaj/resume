@@ -8,7 +8,7 @@ inputs:
 outputs:
   pdf_path:
     description: 'Path to the compiled PDF'
-    value: ${{ inputs.root_file | replace('.tex', '.pdf') }}
+    value: 'main.pdf'
 runs:
   using: 'composite'
   steps:
