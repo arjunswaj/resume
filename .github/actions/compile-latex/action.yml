@@ -1,0 +1,18 @@
+name: 'Compile LaTeX'
+description: 'Compiles LaTeX document to PDF'
+inputs:
+  root_file:
+    description: 'Root LaTeX file to compile'
+    required: true
+    default: 'main.tex'
+outputs:
+  pdf_path:
+    description: 'Path to the compiled PDF'
+    value: 'main.pdf'
+runs:
+  using: 'composite'
+  steps:
+    - name: Compile LaTeX document
+      uses: xu-cheng/latex-action@v2
+      with:
+        root_file: ${{ inputs.root_file }}

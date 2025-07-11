@@ -1,0 +1,47 @@
+name: Build and Publish LaTeX PDF
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Compile LaTeX
+      uses: ./.github/actions/compile-latex
+      with:
+        root_file: main.tex
+        
+    - name: Upload PDF Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: resume-pdf-latest
+        path: main.pdf
+        retention-days: 90
+        
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: latest
+        name: Latest Resume
+        files: main.pdf
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .
+        destination_dir: .
+        keep_files: false
+        include_cname: false
+        publish_branch: gh-pages
+        force_orphan: true
+        enable_jekyll: false
+        exclude_assets: '.github,sections,*.tex,*.log,*.aux,*.fls,*.fdb_latexmk'
