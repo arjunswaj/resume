@@ -19,7 +19,7 @@ jobs:
         root_file: main.tex
         
     - name: Upload PDF as artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: resume-pdf
         path: main.pdf
@@ -33,4 +33,19 @@ jobs:
         files: main.pdf
         generate_release_notes: true
       env:
+        # Default GitHub token with Contents: write and Actions: read permissions
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/master'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .
+        destination_dir: .
+        keep_files: false
+        include_cname: false
+        publish_branch: gh-pages
+        force_orphan: true
+        enable_jekyll: false
+        exclude_assets: '.github,sections,*.tex,*.log,*.aux,*.fls,*.fdb_latexmk'
