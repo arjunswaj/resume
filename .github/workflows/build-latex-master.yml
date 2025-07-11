@@ -1,37 +1,22 @@
-name: Build LaTeX PDF
-
-# This workflow:
-# - For PRs: Compiles LaTeX and uploads as PR-specific artifact for review (30-day retention)
-# - For master pushes: Compiles, uploads artifact, creates release, and deploys to GitHub Pages
+name: Build and Publish LaTeX PDF
 
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v4
     
-    - name: Compile LaTeX document
-      uses: xu-cheng/latex-action@v2
+    - name: Compile LaTeX
+      uses: ./.github/actions/compile-latex
       with:
         root_file: main.tex
         
-    - name: Upload PDF as artifact (PR Review)
-      if: github.event_name == 'pull_request'
-      uses: actions/upload-artifact@v4
-      with:
-        name: resume-pdf-pr-${{ github.event.number }}
-        path: main.pdf
-        retention-days: 30
-        
-    - name: Upload PDF as artifact (Master)
-      if: github.ref == 'refs/heads/master'
+    - name: Upload PDF Artifact
       uses: actions/upload-artifact@v4
       with:
         name: resume-pdf-latest
@@ -39,7 +24,6 @@ jobs:
         retention-days: 90
         
     - name: Create Release
-      if: github.ref == 'refs/heads/master' && github.event_name == 'push'
       uses: softprops/action-gh-release@v1
       with:
         tag_name: latest
@@ -47,11 +31,9 @@ jobs:
         files: main.pdf
         generate_release_notes: true
       env:
-        # Default GitHub token with Contents: write and Actions: read permissions
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
     - name: Deploy to GitHub Pages
-      if: github.ref == 'refs/heads/master' && github.event_name == 'push'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}

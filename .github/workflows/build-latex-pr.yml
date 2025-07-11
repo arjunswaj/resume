@@ -1,0 +1,24 @@
+name: Build LaTeX PDF for PR Review
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build-pr:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Compile LaTeX
+      uses: ./.github/actions/compile-latex
+      with:
+        root_file: main.tex
+        
+    - name: Upload PDF for PR Review
+      uses: actions/upload-artifact@v4
+      with:
+        name: resume-pdf-pr-${{ github.event.number }}
+        path: main.pdf
+        retention-days: 30
