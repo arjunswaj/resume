@@ -61,6 +61,7 @@ jobs:
         mkdir -p deploy
         cp main.pdf deploy/
         cp index.html deploy/
+        # Do NOT copy .gitignore to avoid blocking PDF access on GitHub Pages
         echo "✅ Resume PDF and landing page prepared for deployment"
         ls -la deploy/
         

@@ -59,6 +59,7 @@ jobs:
         mkdir -p test-deploy
         cp main.pdf test-deploy/
         cp index.html test-deploy/
+        # Do NOT copy .gitignore to avoid blocking PDF access on GitHub Pages
         echo "✅ Test deployment directory prepared"
         ls -la test-deploy/
 
