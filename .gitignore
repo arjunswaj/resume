@@ -5,7 +5,6 @@
 *.toc
 *.fdb_latexmk
 *.fls
-*.pdf
 
 # Other temporary files
 *.synctex.gz
