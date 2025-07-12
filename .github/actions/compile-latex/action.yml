@@ -12,19 +12,32 @@ outputs:
 runs:
   using: 'composite'
   steps:
+    - name: Setup LaTeX with full TeXLive
+      shell: bash
+      run: |
+        echo "Installing TeXLive and required packages..."
+        sudo apt-get update
+        sudo apt-get install -y texlive-latex-extra texlive-fonts-recommended
+        echo "TeXLive installation completed"
+    
     - name: Compile LaTeX document
-      uses: xu-cheng/latex-action@v2
-      with:
-        root_file: ${{ inputs.root_file }}
-        work_in_root_file_dir: true
-        continue_on_error: false
+      shell: bash
+      run: |
+        echo "=== Starting LaTeX compilation ==="
+        echo "Compiling: ${{ inputs.root_file }}"
+        
+        # Run pdflatex twice to ensure proper cross-references
+        pdflatex -interaction=nonstopmode -file-line-error ${{ inputs.root_file }}
+        pdflatex -interaction=nonstopmode -file-line-error ${{ inputs.root_file }}
+        
+        echo "=== Compilation completed ==="
     
     - name: Debug compilation output
       shell: bash
       run: |
-        echo "=== LaTeX compilation completed ==="
+        echo "=== LaTeX compilation results ==="
         echo "Current directory: $(pwd)"
-        echo "Looking for generated files:"
+        echo "All files in directory:"
         ls -la
         echo "=== Searching for PDF files ==="
         find . -name "*.pdf" -type f
@@ -32,6 +45,14 @@ runs:
         if [ -f "main.pdf" ]; then
           echo "✅ main.pdf found"
           ls -la main.pdf
+          file main.pdf
         else
           echo "❌ main.pdf not found"
+          echo "Looking for any PDF with different naming:"
+          find . -name "*.pdf" -exec ls -la {} \;
+        fi
+        echo "=== LaTeX log file contents (if exists) ==="
+        if [ -f "main.log" ]; then
+          echo "Last 50 lines of main.log:"
+          tail -50 main.log
         fi
