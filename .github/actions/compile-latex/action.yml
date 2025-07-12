@@ -16,3 +16,22 @@ runs:
       uses: xu-cheng/latex-action@v2
       with:
         root_file: ${{ inputs.root_file }}
+        work_in_root_file_dir: true
+        continue_on_error: false
+    
+    - name: Debug compilation output
+      shell: bash
+      run: |
+        echo "=== LaTeX compilation completed ==="
+        echo "Current directory: $(pwd)"
+        echo "Looking for generated files:"
+        ls -la
+        echo "=== Searching for PDF files ==="
+        find . -name "*.pdf" -type f
+        echo "=== Checking for main.pdf specifically ==="
+        if [ -f "main.pdf" ]; then
+          echo "✅ main.pdf found"
+          ls -la main.pdf
+        else
+          echo "❌ main.pdf not found"
+        fi

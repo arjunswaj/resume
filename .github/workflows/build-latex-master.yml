@@ -22,6 +22,20 @@ jobs:
       with:
         root_file: main.tex
         
+    - name: Debug - List files after compilation
+      run: |
+        echo "=== Current directory contents ==="
+        ls -la
+        echo "=== Looking for PDF files ==="
+        find . -name "*.pdf" -type f | head -20
+        echo "=== Check if main.pdf exists ==="
+        if [ -f "main.pdf" ]; then
+          echo "✅ main.pdf found"
+          ls -la main.pdf
+        else
+          echo "❌ main.pdf not found"
+        fi
+        
     - name: Upload PDF Artifact
       uses: actions/upload-artifact@v4
       with:
@@ -48,11 +62,36 @@ jobs:
     # Prepare deployment directory with PDF and landing page
     - name: Prepare GitHub Pages deployment
       run: |
+        echo "=== Before deployment preparation ==="
+        ls -la
+        echo "=== Creating deploy directory ==="
         mkdir -p deploy
-        cp main.pdf deploy/
-        cp index.html deploy/
-        echo "Resume PDF and landing page prepared for deployment"
+        echo "=== Copying files ==="
+        if [ -f "main.pdf" ]; then
+          cp main.pdf deploy/
+          echo "✅ main.pdf copied to deploy/"
+        else
+          echo "❌ main.pdf not found, cannot copy"
+          exit 1
+        fi
+        
+        if [ -f "index.html" ]; then
+          cp index.html deploy/
+          echo "✅ index.html copied to deploy/"
+        else
+          echo "❌ index.html not found, cannot copy"
+          exit 1
+        fi
+        
+        echo "=== Deploy directory contents ==="
         ls -la deploy/
+        echo "=== Verify main.pdf in deployment directory ==="
+        if [ -f "deploy/main.pdf" ]; then
+          echo "✅ main.pdf exists in deploy directory"
+          ls -la deploy/main.pdf
+        else
+          echo "❌ main.pdf missing from deploy directory"
+        fi
         
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
