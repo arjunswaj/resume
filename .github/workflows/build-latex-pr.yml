@@ -23,18 +23,14 @@ jobs:
       with:
         root_file: main.tex
         
-    - name: Debug - List files after compilation
+    - name: Verify PDF generation
       run: |
-        echo "=== Current directory contents ==="
-        ls -la
-        echo "=== Looking for PDF files ==="
-        find . -name "*.pdf" -type f | head -20
-        echo "=== Check if main.pdf exists ==="
         if [ -f "main.pdf" ]; then
-          echo "✅ main.pdf found"
+          echo "✅ PDF generated successfully"
           ls -la main.pdf
         else
-          echo "❌ main.pdf not found"
+          echo "❌ PDF generation failed"
+          exit 1
         fi
         
     - name: Upload PDF Artifact
@@ -60,36 +56,11 @@ jobs:
     # TEST: Prepare deployment directory
     - name: Test GitHub Pages deployment preparation
       run: |
-        echo "=== Before deployment preparation ==="
-        ls -la
-        echo "=== Creating test-deploy directory ==="
         mkdir -p test-deploy
-        echo "=== Copying files ==="
-        if [ -f "main.pdf" ]; then
-          cp main.pdf test-deploy/
-          echo "✅ main.pdf copied to test-deploy/"
-        else
-          echo "❌ main.pdf not found, cannot copy"
-          exit 1
-        fi
-        
-        if [ -f "index.html" ]; then
-          cp index.html test-deploy/
-          echo "✅ index.html copied to test-deploy/"
-        else
-          echo "❌ index.html not found, cannot copy"
-          exit 1
-        fi
-        
-        echo "=== Test deployment directory contents ==="
+        cp main.pdf test-deploy/
+        cp index.html test-deploy/
+        echo "✅ Test deployment directory prepared"
         ls -la test-deploy/
-        echo "=== Verify main.pdf in deployment directory ==="
-        if [ -f "test-deploy/main.pdf" ]; then
-          echo "✅ main.pdf exists in test-deploy directory"
-          ls -la test-deploy/main.pdf
-        else
-          echo "❌ main.pdf missing from test-deploy directory"
-        fi
 
     # TEST: Try GitHub Pages deployment
     - name: Test GitHub Pages Deployment

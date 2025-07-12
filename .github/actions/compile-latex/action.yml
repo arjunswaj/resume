@@ -16,43 +16,26 @@ runs:
       shell: bash
       run: |
         echo "Installing TeXLive and required packages..."
-        sudo apt-get update
+        sudo apt-get update -qq
         sudo apt-get install -y texlive-latex-extra texlive-fonts-recommended
-        echo "TeXLive installation completed"
     
     - name: Compile LaTeX document
       shell: bash
       run: |
-        echo "=== Starting LaTeX compilation ==="
-        echo "Compiling: ${{ inputs.root_file }}"
+        echo "Compiling LaTeX document: ${{ inputs.root_file }}"
         
         # Run pdflatex twice to ensure proper cross-references
         pdflatex -interaction=nonstopmode -file-line-error ${{ inputs.root_file }}
         pdflatex -interaction=nonstopmode -file-line-error ${{ inputs.root_file }}
         
-        echo "=== Compilation completed ==="
-    
-    - name: Debug compilation output
-      shell: bash
-      run: |
-        echo "=== LaTeX compilation results ==="
-        echo "Current directory: $(pwd)"
-        echo "All files in directory:"
-        ls -la
-        echo "=== Searching for PDF files ==="
-        find . -name "*.pdf" -type f
-        echo "=== Checking for main.pdf specifically ==="
+        # Check if PDF was generated successfully
         if [ -f "main.pdf" ]; then
-          echo "✅ main.pdf found"
-          ls -la main.pdf
-          file main.pdf
+          echo "✅ LaTeX compilation successful"
         else
-          echo "❌ main.pdf not found"
-          echo "Looking for any PDF with different naming:"
-          find . -name "*.pdf" -exec ls -la {} \;
-        fi
-        echo "=== LaTeX log file contents (if exists) ==="
-        if [ -f "main.log" ]; then
-          echo "Last 50 lines of main.log:"
-          tail -50 main.log
+          echo "❌ LaTeX compilation failed"
+          if [ -f "main.log" ]; then
+            echo "LaTeX error log (last 30 lines):"
+            tail -30 main.log
+          fi
+          exit 1
         fi
