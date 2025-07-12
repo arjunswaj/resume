@@ -45,15 +45,23 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
+    # Prepare deployment directory with PDF and landing page
+    - name: Prepare GitHub Pages deployment
+      run: |
+        mkdir -p deploy
+        cp main.pdf deploy/
+        cp index.html deploy/
+        echo "Resume PDF and landing page prepared for deployment"
+        ls -la deploy/
+        
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: .
+        publish_dir: deploy
         destination_dir: .
         keep_files: false
         include_cname: false
         publish_branch: gh-pages
         force_orphan: true
         enable_jekyll: false
-        exclude_assets: '.github,sections,*.tex,*.log,*.aux,*.fls,*.fdb_latexmk'

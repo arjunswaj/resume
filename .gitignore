@@ -12,3 +12,7 @@
 
 # Test artifacts from GitHub Actions
 test-pr-*/
+
+# Deployment directories
+deploy/
+test-deploy/

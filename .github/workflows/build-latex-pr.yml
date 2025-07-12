@@ -43,15 +43,23 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    # TEST: Prepare deployment directory
+    - name: Test GitHub Pages deployment preparation
+      run: |
+        mkdir -p test-deploy
+        cp main.pdf test-deploy/
+        cp index.html test-deploy/
+        echo "Test deployment directory prepared"
+        ls -la test-deploy/
+
     # TEST: Try GitHub Pages deployment
     - name: Test GitHub Pages Deployment
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: .
+        publish_dir: test-deploy
         destination_dir: test-pr-${{ github.event.number }}
         keep_files: true
         publish_branch: gh-pages
         force_orphan: false
         enable_jekyll: false
-        exclude_assets: '.github,sections,*.tex,*.log,*.aux,*.fls,*.fdb_latexmk'
