@@ -1,12 +1,19 @@
-name: Build LaTeX PDF for PR Review
+name: Build and Test LaTeX PDF Workflow
 
 on:
   pull_request:
     branches: [ master ]
 
 jobs:
-  build-pr:
+  build-and-test:
     runs-on: ubuntu-latest
+    
+    # Add explicit permissions for testing release and pages functionality
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+      pull-requests: write
     
     steps:
     - uses: actions/checkout@v4
@@ -16,9 +23,54 @@ jobs:
       with:
         root_file: main.tex
         
-    - name: Upload PDF for PR Review
+    - name: Verify PDF generation
+      run: |
+        if [ -f "main.pdf" ]; then
+          echo "✅ PDF generated successfully"
+          ls -la main.pdf
+        else
+          echo "❌ PDF generation failed"
+          exit 1
+        fi
+        
+    - name: Upload PDF Artifact
       uses: actions/upload-artifact@v4
       with:
         name: resume-pdf-pr-${{ github.event.number }}
         path: main.pdf
         retention-days: 30
+
+    # TEST: Try release creation in PR (will be draft)
+    - name: Test Release Creation
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: test-pr-${{ github.event.number }}
+        name: Test Release PR-${{ github.event.number }}
+        files: main.pdf
+        draft: true
+        prerelease: true
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # TEST: Prepare deployment directory
+    - name: Test GitHub Pages deployment preparation
+      run: |
+        mkdir -p test-deploy
+        cp main.pdf test-deploy/
+        cp index.html test-deploy/
+        # Do NOT copy .gitignore to avoid blocking PDF access on GitHub Pages
+        echo "✅ Test deployment directory prepared"
+        ls -la test-deploy/
+
+    # TEST: Try GitHub Pages deployment
+    - name: Test GitHub Pages Deployment
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: test-deploy
+        destination_dir: test-pr-${{ github.event.number }}
+        keep_files: true
+        publish_branch: gh-pages
+        force_orphan: false
+        enable_jekyll: false

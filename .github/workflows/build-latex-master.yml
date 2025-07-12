@@ -8,6 +8,12 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     
+    # Add explicit permissions for release and pages functionality
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    
     steps:
     - uses: actions/checkout@v4
     
@@ -16,32 +22,57 @@ jobs:
       with:
         root_file: main.tex
         
+    - name: Verify PDF generation
+      run: |
+        if [ -f "main.pdf" ]; then
+          echo "✅ PDF generated successfully"
+          ls -la main.pdf
+        else
+          echo "❌ PDF generation failed"
+          exit 1
+        fi
+        
     - name: Upload PDF Artifact
       uses: actions/upload-artifact@v4
       with:
         name: resume-pdf-latest
         path: main.pdf
         retention-days: 90
+
+    # Generate unique tag name to avoid conflicts
+    - name: Generate tag name
+      id: tag
+      run: echo "tag_name=release-$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_OUTPUT
         
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: latest
-        name: Latest Resume
+        tag_name: ${{ steps.tag.outputs.tag_name }}
+        name: Resume PDF ${{ steps.tag.outputs.tag_name }}
         files: main.pdf
         generate_release_notes: true
+        make_latest: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    # Prepare deployment directory with PDF and landing page
+    - name: Prepare GitHub Pages deployment
+      run: |
+        mkdir -p deploy
+        cp main.pdf deploy/
+        cp index.html deploy/
+        # Do NOT copy .gitignore to avoid blocking PDF access on GitHub Pages
+        echo "✅ Resume PDF and landing page prepared for deployment"
+        ls -la deploy/
         
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: .
+        publish_dir: deploy
         destination_dir: .
         keep_files: false
         include_cname: false
         publish_branch: gh-pages
         force_orphan: true
         enable_jekyll: false
-        exclude_assets: '.github,sections,*.tex,*.log,*.aux,*.fls,*.fdb_latexmk'

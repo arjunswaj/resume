@@ -5,7 +5,13 @@
 *.toc
 *.fdb_latexmk
 *.fls
-*.pdf
 
 # Other temporary files
 *.synctex.gz
+
+# Test artifacts from GitHub Actions
+test-pr-*/
+
+# Deployment directories
+deploy/
+test-deploy/
