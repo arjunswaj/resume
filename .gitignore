@@ -9,3 +9,6 @@
 
 # Other temporary files
 *.synctex.gz
+
+# Test artifacts from GitHub Actions
+test-pr-*/
