@@ -88,8 +88,9 @@
     <div class="download-section">
         <h2>📄 Resume Download</h2>
         <p>Download my latest resume in PDF format:</p>
-        <a href="main.pdf" class="download-btn" target="_blank">Download Resume PDF</a>
+        <a href="resume-v{{VERSION}}.pdf" class="download-btn" target="_blank">Download Resume PDF</a>
         <p><small>File will open in a new tab</small></p>
+        <p>Version: {{VERSION}}</p>
     </div>
 
     <div class="info-section">
@@ -117,12 +118,7 @@
 
     <div class="footer">
         <p>Resume automatically generated and deployed via GitHub Actions</p>
-        <p>Last updated: <span id="lastModified"></span></p>
+        <p>Last updated: {{LAST_COMMIT_DATE}}</p>
     </div>
-
-    <script>
-        // Set last modified date
-        document.getElementById('lastModified').textContent = new Date().toLocaleDateString();
-    </script>
 </body>
 </html>
