@@ -18,16 +18,28 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
+    - name: Read version from version.txt
+      id: version
+      run: |
+        VERSION=$(cat version.txt)
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Using version: $VERSION"
+    
     - name: Compile LaTeX
       uses: ./.github/actions/compile-latex
       with:
         root_file: main.tex
         
-    - name: Verify PDF generation
+    - name: Verify PDF generation and rename with version
       run: |
         if [ -f "main.pdf" ]; then
           echo "✅ PDF generated successfully"
           ls -la main.pdf
+          # Rename PDF with version
+          VERSION="${{ steps.version.outputs.version }}"
+          mv main.pdf "resume-v${VERSION}.pdf"
+          echo "✅ PDF renamed to resume-v${VERSION}.pdf"
+          ls -la "resume-v${VERSION}.pdf"
         else
           echo "❌ PDF generation failed"
           exit 1
@@ -37,7 +49,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: resume-pdf-pr-${{ github.event.number }}
-        path: main.pdf
+        path: resume-v${{ steps.version.outputs.version }}.pdf
         retention-days: 30
 
     # TEST: Try release creation in PR (will be draft)
@@ -46,7 +58,7 @@ jobs:
       with:
         tag_name: test-pr-${{ github.event.number }}
         name: Test Release PR-${{ github.event.number }}
-        files: main.pdf
+        files: resume-v${{ steps.version.outputs.version }}.pdf
         draft: true
         prerelease: true
         generate_release_notes: true
@@ -57,11 +69,24 @@ jobs:
     - name: Test GitHub Pages deployment preparation
       run: |
         mkdir -p test-deploy
-        cp main.pdf test-deploy/
+        VERSION="${{ steps.version.outputs.version }}"
+        LAST_COMMIT_DATE=$(git log -1 --format=%cd --date=short)
+        echo "Using version: $VERSION"
+        echo "Last commit date: $LAST_COMMIT_DATE"
+        
+        # Copy versioned PDF
+        cp "resume-v${VERSION}.pdf" test-deploy/
+        
+        # Copy and update HTML with version and last commit date
         cp index.html test-deploy/
+        sed -i "s/{{VERSION}}/$VERSION/g" test-deploy/index.html
+        sed -i "s/{{LAST_COMMIT_DATE}}/$LAST_COMMIT_DATE/g" test-deploy/index.html
+        
         # Do NOT copy .gitignore to avoid blocking PDF access on GitHub Pages
         echo "✅ Test deployment directory prepared"
         ls -la test-deploy/
+        echo "✅ Checking HTML content:"
+        grep -E "(Version:|Last updated:|href=)" test-deploy/index.html
 
     # TEST: Try GitHub Pages deployment
     - name: Test GitHub Pages Deployment
