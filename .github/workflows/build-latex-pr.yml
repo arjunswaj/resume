@@ -35,11 +35,12 @@ jobs:
         if [ -f "main.pdf" ]; then
           echo "✅ PDF generated successfully"
           ls -la main.pdf
-          # Rename PDF with version
+          # Rename PDF with version and PR number for test releases
           VERSION="${{ steps.version.outputs.version }}"
-          mv main.pdf "resume-v${VERSION}.pdf"
-          echo "✅ PDF renamed to resume-v${VERSION}.pdf"
-          ls -la "resume-v${VERSION}.pdf"
+          PR_NUMBER="${{ github.event.number }}"
+          mv main.pdf "resume-v${VERSION}-pr-${PR_NUMBER}.pdf"
+          echo "✅ PDF renamed to resume-v${VERSION}-pr-${PR_NUMBER}.pdf"
+          ls -la "resume-v${VERSION}-pr-${PR_NUMBER}.pdf"
         else
           echo "❌ PDF generation failed"
           exit 1
@@ -49,7 +50,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: resume-pdf-pr-${{ github.event.number }}
-        path: resume-v${{ steps.version.outputs.version }}.pdf
+        path: resume-v${{ steps.version.outputs.version }}-pr-${{ github.event.number }}.pdf
         retention-days: 30
 
     # TEST: Try release creation in PR (will be draft)
@@ -58,7 +59,7 @@ jobs:
       with:
         tag_name: test-pr-${{ github.event.number }}
         name: Test Release PR-${{ github.event.number }}
-        files: resume-v${{ steps.version.outputs.version }}.pdf
+        files: resume-v${{ steps.version.outputs.version }}-pr-${{ github.event.number }}.pdf
         draft: true
         prerelease: true
         generate_release_notes: true
@@ -70,17 +71,21 @@ jobs:
       run: |
         mkdir -p test-deploy
         VERSION="${{ steps.version.outputs.version }}"
+        PR_NUMBER="${{ github.event.number }}"
         LAST_COMMIT_DATE=$(git log -1 --format=%cd --date=short)
         echo "Using version: $VERSION"
+        echo "PR number: $PR_NUMBER"
         echo "Last commit date: $LAST_COMMIT_DATE"
         
-        # Copy versioned PDF
-        cp "resume-v${VERSION}.pdf" test-deploy/
+        # Copy versioned PDF with PR number
+        cp "resume-v${VERSION}-pr-${PR_NUMBER}.pdf" test-deploy/
         
         # Copy and update HTML with version and last commit date
         cp index.html test-deploy/
         sed -i "s/{{VERSION}}/$VERSION/g" test-deploy/index.html
         sed -i "s/{{LAST_COMMIT_DATE}}/$LAST_COMMIT_DATE/g" test-deploy/index.html
+        # Update PDF link to include PR number for test
+        sed -i "s/resume-v${VERSION}.pdf/resume-v${VERSION}-pr-${PR_NUMBER}.pdf/g" test-deploy/index.html
         
         # Do NOT copy .gitignore to avoid blocking PDF access on GitHub Pages
         echo "✅ Test deployment directory prepared"
