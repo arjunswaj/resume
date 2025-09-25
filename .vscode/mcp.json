@@ -1,0 +1,10 @@
+{
+	"servers": {
+		"texflow": {
+			"type": "stdio",
+			"command": "uvx",
+			"args": ["--from", "git+https://github.com/aaronsb/texflow-mcp.git", "texflow", "."]
+		}
+	},
+	"inputs": []
+}
