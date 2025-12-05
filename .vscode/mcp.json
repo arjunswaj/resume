@@ -4,6 +4,21 @@
 			"type": "stdio",
 			"command": "uvx",
 			"args": ["--from", "git+https://github.com/aaronsb/texflow-mcp.git", "texflow", "."]
+		},
+		"sequential-thinking": {
+			"command": "npx",
+			"args": [
+				"-y",
+				"@modelcontextprotocol/server-sequential-thinking"
+			]
+		},
+		"mermaid": {
+			"type": "stdio",
+			"command": "npx",
+			"args": [
+				"-y",
+        		"mcp-mermaid"
+			]
 		}
 	},
 	"inputs": []
