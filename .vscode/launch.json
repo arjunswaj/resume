@@ -1,0 +1,11 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Build & View Resume PDF",
+			"type": "extensionHost",
+			"request": "launch",
+			"preLaunchTask": "Build Resume PDF"
+		}
+	]
+}
