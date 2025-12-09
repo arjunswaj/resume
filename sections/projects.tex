@@ -7,8 +7,6 @@
 {Developed a full-stack generative music platform for Indian classical music (Raagas) using algorithmic composition.\newline{}
 \begin{itemize}
 \setlength\itemsep{0.5em}
-    \item Frontend \& Realtime UX (React 19, Node.js, MUI, Tone.js): Built responsive UI with WebSocket playback; functional patterns (Monet.js) for resilient state
-    \item Backend \& Music Generation (Haskell): Engineered Markov Chain composition in \textit{Euterpea} with gRPC/WebSocket services for low-latency streaming
-    \item Performance \& Caching: Added Redis caching with tuned TTLs, cutting repeat recommendation load by 80\%+
-    \item Infrastructure (AKS, Helm/Bicep, Docker): Shipped multi-service deployment with CI/CD and TLS-terminated gateway
+    \item Built end-to-end platform with React/Node.js frontend (WebSocket real-time playback, Monet.js functional patterns) and Haskell backend (Markov Chain composition, gRPC/WebSocket services); implemented Redis caching with tuned TTLs, \textit{reducing repeat recommendation load by 80\%+}
+    \item Deployed multi-service architecture on AKS using Helm/Bicep with CI/CD pipelines, Docker multi-stage builds, and TLS-terminated NGINX gateway
 \end{itemize}}
