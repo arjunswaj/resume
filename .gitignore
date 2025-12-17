@@ -15,3 +15,6 @@ test-pr-*/
 # Deployment directories
 deploy/
 test-deploy/
+
+# VS Code configuration
+.vscode/mcp.json
