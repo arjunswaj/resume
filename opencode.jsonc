@@ -1,0 +1,42 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "mcp": {
+        "texflow": {
+            "type": "local",
+            "enabled": true,
+            "command": [
+                "/Users/arjun/brew/bin/uvx",
+                "--from",
+                "git+https://github.com/aaronsb/texflow-mcp.git",
+                "texflow",
+                "."
+            ],
+        },
+        "sequential-thinking": {
+            "type": "local",
+            "enabled": true,
+            "command": [
+                "npx",
+                "-y",
+                "@modelcontextprotocol/server-sequential-thinking"
+            ]
+        },
+        "mermaid": {
+            "type": "local",
+            "enabled": true,
+            "command": [
+                "npx",
+                "-y",
+                "mcp-mermaid"
+            ]
+        },
+        "playwright": {
+            "type": "local",
+            "enabled": true,
+            "command": [
+                "npx",
+                "@playwright/mcp@latest"
+            ],
+        }
+    },
+}
