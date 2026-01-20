@@ -13,6 +13,14 @@ Refer to `.vscode/tasks.json` for platform-specific build commands:
 - **Linux**: `pdflatex`
 - **Windows**: `pdflatex`
 
+## Resume Structure
+
+1. **Experience section must fit on page 1** - Keep the Experience section concise enough to fit entirely on the first page. Trim or consolidate bullets as needed.
+
+2. **Page break after Experience** - There is a `\pagebreak` in `main.tex` after `sections/experience.tex`. Education and Skills go on page 2.
+
+3. **Projects section is optional** - Only include `sections/projects.tex` when the hobby project is strongly relevant to the target role.
+
 ## Language and Style
 
 Key guidelines:
