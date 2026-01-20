@@ -18,3 +18,5 @@ test-deploy/
 
 # VS Code configuration
 .vscode/mcp.json
+
+intro.md
