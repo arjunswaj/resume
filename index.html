@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Arjun Shekar Bharadwaj | Senior Software Engineer | Microsoft Azure</title>
+    <meta name="description" content="Senior Software Engineer with 12+ years experience at Microsoft and Amazon. Expert in AI-powered platforms, distributed systems, Kubernetes, and cloud-native architectures serving millions of users.">
+    <meta name="keywords" content="Senior Software Engineer, Microsoft Azure, Amazon Alexa, AI Engineer, Distributed Systems, Kubernetes, Cloud Architecture, Java, Python, Haskell, LLM, Machine Learning, Backend Engineer">
+    <meta name="author" content="Arjun Shekar Bharadwaj">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Arjun Shekar Bharadwaj | Senior Software Engineer">
+    <meta property="og:description" content="12+ years building AI-powered platforms and distributed systems at Microsoft and Amazon. Architected Alexa's AI agent system serving millions daily.">
+    <meta property="og:url" content="https://arjunswaj.github.io">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Arjun Shekar Bharadwaj | Senior Software Engineer">
+    <meta name="twitter:description" content="12+ years building AI-powered platforms at Microsoft and Amazon.">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://arjunswaj.github.io">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Arjun Shekar Bharadwaj",
+        "jobTitle": "Senior Software Engineer",
+        "worksFor": {
+            "@type": "Organization",
+            "name": "Microsoft"
+        },
+        "url": "https://arjunswaj.github.io",
+        "sameAs": [
+            "https://github.com/arjunswaj",
+            "https://linkedin.com/in/arjunswaj"
+        ],
+        "knowsAbout": ["Distributed Systems", "AI/ML", "Cloud Architecture", "Kubernetes", "Java", "Python", "Haskell"]
+    }
+    </script>
+    
+    <style>
+        :root {
+            --primary: #0078d4;
+            --primary-dark: #005a9e;
+            --secondary: #ff9500;
+            --text-dark: #1a1a1a;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --border: #e1e4e8;
+            --success: #28a745;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .hero .tagline {
+            font-size: 1.3em;
+            opacity: 0.95;
+            margin-bottom: 15px;
+        }
+        
+        .hero .experience-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+        
+        /* Summary Section */
+        .summary {
+            padding: 40px;
+            background: var(--bg-light);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .summary p {
+            font-size: 1.15em;
+            color: var(--text-dark);
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto;
+        }
+        
+        .summary .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* Achievements Section */
+        .achievements {
+            padding: 40px;
+        }
+        
+        .achievements h2 {
+            font-size: 1.5em;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .achievement-item {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .achievement-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .achievement-item .company {
+            font-size: 0.85em;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        
+        .achievement-item h3 {
+            font-size: 1.05em;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .achievement-item p {
+            font-size: 0.9em;
+            color: var(--text-light);
+        }
+        
+        .metric {
+            display: inline-block;
+            background: var(--success);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+        
+        /* Skills Section */
+        .skills {
+            padding: 30px 40px;
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
+        }
+        
+        .skills h2 {
+            font-size: 1.2em;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .skill-tag {
+            background: white;
+            color: var(--text-dark);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+        
+        .skill-tag:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .skill-tag.highlight {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0,120,212,0.3);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--text-dark);
+            border: 2px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        /* Contact Grid */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-item {
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.95em;
+        }
+        
+        .contact-item strong {
+            display: block;
+            color: var(--text-light);
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+        
+        .contact-item a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Hobby Project */
+        .hobby-section {
+            padding: 30px 40px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+        }
+        
+        .hobby-section h2 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-align: center;
+            opacity: 0.9;
+        }
+        
+        .hobby-section p {
+            text-align: center;
+            font-size: 0.95em;
+            opacity: 0.85;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+        
+        .hobby-section .tech-stack {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.85em;
+            opacity: 0.7;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 25px 40px;
+            text-align: center;
+            background: var(--bg-light);
+            border-top: 1px solid var(--border);
+        }
+        
+        .footer p {
+            font-size: 0.85em;
+            color: var(--text-light);
+        }
+        
+        .version-badge {
+            display: inline-block;
+            background: var(--border);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 1.8em;
+            }
+            .hero .tagline {
+                font-size: 1.1em;
+            }
+            .summary, .achievements, .cta-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <article class="card" itemscope itemtype="https://schema.org/Person">
+            <!-- Hero Section -->
+            <header class="hero">
+                <h1 itemprop="name">Arjun Shekar Bharadwaj</h1>
+                <p class="tagline" itemprop="jobTitle">Senior Software Engineer at Microsoft Azure</p>
+                <span class="experience-badge">12+ Years in Distributed Systems & AI</span>
+            </header>
+            
+            <!-- Summary -->
+            <section class="summary">
+                <p>
+                    I architect <span class="highlight">AI-powered platforms</span> and <span class="highlight">large-scale distributed systems</span> 
+                    that serve millions of users daily. At Amazon, I built the AI agent system powering Alexa's multi-device targeting. 
+                    At Microsoft Azure, I lead the Azure Resource Builder compute platform processing billions of resource events securely for monitoring, compliance, and automation.
+                </p>
+            </section>
+            
+            <!-- Key Achievements -->
+            <section class="achievements">
+                <h2>Career Highlights</h2>
+                <div class="achievement-grid">
+                    <div class="achievement-item">
+                        <div class="company">Amazon Alexa</div>
+                        <h3>AI Agent Platform for Multi-Device Targeting</h3>
+                        <p>Architected Action API handling <span class="metric">100%</span> of Alexa traffic for device recommendations using LLM-based reasoning with <span class="metric">90%+</span> success rates.</p>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="company">Amazon Alexa</div>
+                        <h3>Cross-Team Technical Leadership</h3>
+                        <p>Led working group of <span class="metric">20+</span> stakeholders across Principal Engineers to deliver Vega OS launch on schedule.</p>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="company">Amazon Alexa</div>
+                        <h3>Cost Optimization at Scale</h3>
+                        <p>Reduced downstream service calls by <span class="metric">50%</span> through Strategy pattern refactoring, significantly cutting global scaling costs.</p>
+                    </div>
+                    <div class="achievement-item">
+                        <div class="company">Microsoft Azure</div>
+                        <h3>Azure Resource Builder Compute Platform</h3>
+                        <p>Led control/data plane separation, Airflow orchestration, and containerized runtimes to process billions of Azure resource events and cut onboarding to self-service.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Skills -->
+            <section class="skills">
+                <h2>Technical Expertise</h2>
+                <div class="skill-tags">
+                    <span class="skill-tag highlight">AI/LLM Integration</span>
+                    <span class="skill-tag highlight">Distributed Systems</span>
+                    <span class="skill-tag highlight">Kubernetes</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Haskell</span>
+                    <span class="skill-tag">AWS</span>
+                    <span class="skill-tag">Azure</span>
+                    <span class="skill-tag">Prompt Engineering</span>
+                    <span class="skill-tag">Apache Airflow</span>
+                    <span class="skill-tag">Kafka</span>
+                    <span class="skill-tag">gRPC</span>
+                </div>
+            </section>
+            
+            <!-- Hobby Project -->
+            <section class="hobby-section">
+                <h2>Passion Project: Generative Music Platform</h2>
+                <p>
+                    Built a full-stack platform that algorithmically generates Indian classical music (Raagas) 
+                    using Markov chains in Haskell, with real-time WebSocket streaming and React-based audio synthesis. 
+                    Deployed on Azure Kubernetes with complete CI/CD automation.
+                </p>
+                <div class="tech-stack">Haskell | React | gRPC | Kubernetes | Azure DevOps</div>
+            </section>
+            
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <h2>Let's Connect</h2>
+                <div class="cta-buttons">
+                    <a href="resume-v2.1.0.pdf" class="btn btn-primary" target="_blank">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download Resume (PDF)
+                    </a>
+                    <a href="https://github.com/arjunswaj" class="btn btn-secondary" target="_blank">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        GitHub Profile
+                    </a>
+                </div>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <strong>Email</strong>
+                        <a href="mailto:arjun.s.waj@gmail.com" itemprop="email">arjun.s.waj@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Phone</strong>
+                        <span itemprop="telephone">+1 (650) 379-5120</span>
+                    </div>
+                    <div class="contact-item">
+                        <strong>Location</strong>
+                        <span itemprop="address">Fremont, CA</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Footer -->
+            <footer class="footer">
+                <p>Resume automatically generated and deployed via GitHub Actions</p>
+                <p>Last updated: 2026-01-20</p>
+                <span class="version-badge">v2.1.0</span>
+            </footer>
+        </article>
+    </div>
+</body>
+</html>
