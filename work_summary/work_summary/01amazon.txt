@@ -1,0 +1,527 @@
+# AMAZON WORK SUMMARY
+
+## AI Agent & Agentic Systems Experience
+
+### Action API for Multi-Device Target Recommendations (AI Agent System)
+
+**Project:** Production AI agent system for device targeting in Alexa multi-device environments
+
+**Scale & Role:**
+- Architected Action API service (similar to MCP server architecture) handling all production Alexa traffic
+- Designed and engineered prompts with In-Context Learning for Music playback scenarios across multi-device setups
+- Served as architect for the Action API service and prompt engineer
+
+**Agent Workflow Design:**
+- **Context Components:** Device/endpoint context (states, capabilities, ongoing tasks), voice utterance history, user preferences
+- **Token Management:** Configurable upper limit on context tokens using ranking and pagination strategies
+- **Business Rules:** Captured stakeholder-agreed rules in endpoint selection prompts
+- **Evaluation:** Test harness suite covering all device configuration combinations, iterated until achieving 90%+ consistent success rates
+
+**Backend Services (Target Recommendation System):**
+- Built Java-based REST API exposed as Action API enabling LLM API invocation for target device recommendations
+- Architecture identical to MCP servers for agent tool calling
+- Stack: Java, DynamoDB, Redis (caching layer), AWS infrastructure
+
+**RAG-like System Implementation:**
+- Injected enriched Endpoint Context into prompt context with customized details (states, capabilities, ongoing/idle tasks, user preferences)
+- Context enrichment improved target determination prompt success rates
+- Evaluated using test harness with modeled scenarios, iteratively enhanced to meet 90% benchmark
+
+**Performance Optimization:**
+- **Latency:** Pre-computation of expensive context (especially visual context), served from cache
+- **Reliability:** Implemented redundancy for API availability
+- **Cost:** Token size limiting through ranking and pagination of endpoint context
+
+**Agent Orchestration:**
+- Integrated with proprietary Alexa+ orchestration service managing multi-service pipeline requests
+- Coordinated workflow across multiple backend services
+
+**Production Operations:**
+- Served as on-call maintaining high availability with low p99.9 latencies
+- Led Q4 readiness and scaling initiatives for agent-driven systems
+- Served 15 months as OE Samurai for entire Alexa Platform org
+
+---
+
+## Key Projects & Achievements
+
+**Project:** Complete design and delivery of OOC Invoice Service (HLD, LLD)
+
+**B**Cod- Focus on readability and maintainability
+
+**Code Review Excellence - Sample Reviews:**
+- **Nischal's CR-56047656:** Java 8 best practices, improved readability, Null Object pattern
+- **Simon's CR-54174991:** Composition over Inheritance, ModelMapper implementation  
+- **Sagar's CR-59372647:** Proper interface usage, composition for code sharing
+- **Sagar's CR-59325958:** Java 8 code readability, static usage best practices
+- **Adeeb's CR-66087558:** TFS sync signature cleaning, Future flattening for readability
+- **Evan's CR-79864456:** Load test optimization through request object reuse and simplified data structures Excellence - Sample Reviews:**
+- **Nischal's CR-56047656:** Java 8 best practices, improved readability, Null Object pattern
+- **Simon's CR-54174991:** Composition over Inheritance, ModelMapper implementation  
+- **Sagar's CR-59372647:** Proper interface usage, composition for code sharing
+- **Sagar's CR-59325958:** Java 8 code readability, static usage best practices
+- **Adeeb's CR-66087558:** TFS sync signature cleaning, Future flattening for readability
+- **Evan's CR-79864456:** Load test optimization through request object reuse and simplified data structures Purpose:** Generation and transfer of invoices for orders placed on offers from OOC merchants
+
+**Technical Architecture:**
+- Designed reactive service generating invoices (CR-830005, CR-821350) based on Seller Shipment Complete events
+- Integrated with PCE service to fetch purchase documents
+- Used Beejak to create encrypted PDF invoices stored in S3
+
+**External Integration:**
+- Established secure SFTP link with Deutsche Bank for invoice transfer
+- Implemented secure channel for encrypted invoice transfer upon disbursement completion
+
+**Performance Optimization:**
+- Identified and resolved flaky SFTP connection issues
+- Redesigned transfer process using connection pool for SFTP reuse (CR-3711947)
+- Enabled efficient bulk invoice transfervice Environment
+
+**Team Goal:** Multi-device capabilities for I/O Decoupling project
+
+**Scope:** Computing merged capabilities for all visual cases to support seamless I/O Decoupling across all domains
+
+**Cross-Team Collaboration:**
+- Coordinated with multiple teams and Principal Engineers: ADCS, Platform (Alexa Service), Atlas
+- Updated traffic routing in DDRI library's remote invocation (CR-14245839) - impacting every domain
+- Implemented visual capabilities fetching for visual targets in backend (Alexa Service - CR-15148561)
+
+**Strategic Planning:**
+- Devised long-term strategy for merged capabilities
+- Collaborated with Principal Engineers from ADCS, Platform, and Targeting teamss
+
+### 1. Vega/Hypnos Launch
+
+**Background:** VSK GA and Vega OS devices are v3 converged endpoints which will not support non-BR-approved, non-public-released APIs.
+
+**Key Contributions:**
+- Identified and implemented changes required in all MDO owned services and libraries (CR-73000758, CR-72499335, CR-71980221) to support externally published APIs
+- Drove changes in other cloud services by cutting intakes to ACRS (ACD-INTAKE-6) and ADS3 (ACD-INTAKE-9) teams
+- Led focus support for PSR and onboarding PSR 3.0 to ADS3
+
+**Technical Challenge:** Host devices on Vega would not be publishing PlaybackStateReporter (PSR) change report updates - individual apps would publish their own updates
+
+**Solution:** 
+- Developed workaround proposals to publish Content Focus state on Remote Video Player (RVP) for PSR use cases
+- Created integration testing sessions with Video (guangzz) and Middleware teams (bennyk)
+- Verified changes for single device, multi device and multi domain scenarios
+- Successfully dialed up the weblab
+
+### 2. Session Shortlister Rules for Move and Resume (Prompt Engineering Foundation)
+
+**Project:** Media Portability - Skill Session Shortlister rules for Move and Resume scenarios
+
+**AI Agent Context:**
+- Early work establishing business rules and scenario categorization later used in prompt engineering
+- Systematic scenario analysis methodology applied to test harness design for AI agent evaluation
+- Coordinated with stakeholders to define rules that were subsequently encoded in endpoint selection prompts
+
+**Leadership Role:**
+- Led design and delivery for Media Portability project
+- Analyzed scenarios from Product Managers and categorized them systematically
+- Coordinated with Product and Partner Teams (Music) for requirements validation
+
+**Technical Implementation:**
+- Identified signals needed for S3A rules implementation (CR-54949691, CR-55642533, CR-55727584, CR-56160422)
+- Collaborated with MDCS and Music teams for signal plumbing
+- Enhanced S3A framework with DR team to support skill session selection and sorting
+
+### 3. Spaces-Based Targeting Support for AV Gear (AI Agent Signals Integration)
+
+**Objective:** Enable space-based implicit and explicit targeting of AV devices within customer spaces
+
+**AI Agent Integration:**
+- Architected signals for AI agent recommendations including device recency and proximity in multi-device environments
+- Designed signals pipeline feeding into Action API for LLM-based device targeting decisions
+- Signals used in prompt context for In-Context Learning in Music playback scenarios
+
+**Technical Leadership:**
+- Led design and delivery of Hyprank Adjustment rules for AV Gear project
+- Collaborated with Hyprank team to modify HRA framework
+- Implemented Feature Engineering changes (CR-27877213, CR-28762092) to plumb signals from Task Instances
+
+**Key Achievements:**
+- Categorized scenarios into four groups and designed domain-agnostic rules (CR-30314267, CR-31713518)
+- Integrated recency and proximity information into Hyprank Framework (core signals for AI agent recommendations)
+- Optimized performance: Refactored TDS Context Retriever (CR-42691663)
+- Reduced CHR query calls from TDS to CHRS by 50% per request (CR-43659958, CR-45179772)
+
+	•	Capabilities in Multi Device Environment
+(A Team goal) Lead the design and delivery of the Multi device capabilities for I/O Decoupling project for computing the merged capabilities for all visual cases to support I/O Decoupling seamlessly with all the domains. I worked with multiple teams and PEs including ADCS, Platform (Alexa Service), Atlas etc. in order to update the routing of traffic in the DDRI library’s remote invocation (CR-14245839) which affects every domain and then by fetching the visual capabilities for visual targets for all the visual requests in the backend (Alexa Service - CR-15148561). I also devised a long-term strategy for the merged capabilities by collaborating with the PEs from ADCS, Platform and Targeting.
+
+### 5. Media Portability BI Metrics
+
+**Project:** Analytics for TDS v2 - establishing BI Metrics parity during Media Portability launch
+
+**Business Impact:**
+- Ensured continuity of BI Metrics during Music migration from TDS v1 to v2
+- Onboarded TDS v2 to Datamart for comprehensive analytics
+
+**Technical Benefits:**
+- Enabled sophisticated examination of TDS ranking engine context through Coldplay
+- Provided oncalls ability to inspect ranking decisions made by the ranking engine
+- Implementation: CR-62390724, CR-62665189, CR-63104867
+
+	•	OOC Invoice Service
+Lead the design and delivery of the Out of Country (OOC) Invoice Service (HLD, LLD) for generation and transfer of invoices for the orders placed on the offer generated by OOC merchants. I designed this reactive service which generated the invoice (CR-830005, CR-821350) based on Seller Shipment Complete events and integrated with PCE service to fetch the purchase document and passed it to Beejak to create the encrypted PDF invoice stored in S3. I also integrated with external teams outside Amazon (Deutsche Bank) to establish an SFTP link to transfer the encrypted invoices over the secure channel upon the receipt of seller’s disbursement completion notification. When the SFTP connection was observed to be flaky, I redesigned and updated the transfer process to use connection pool to reuse SFTP connection pool (CR-3711947) for bulk invoice transfer.
+
+### 7. OOC Auto Disbursement
+
+**Project:** Automated payment system for OOC Merchants
+
+**Business Impact:**
+- Enabled compliance with international merchant regulations
+- Removed bottleneck of manual ledger management for OOC merchants
+- Facilitated launch of more OOC merchants in IN marketplace
+
+**Technical Deep Dive:**
+- Conducted comprehensive analysis of payment process workflow
+- Implemented payment system rules (CR-1241052, CR-1497469) for automated disbursement instructions
+- Modified every service in payments platform with OOC-specific configurations and rules
+
+### 8. Scaling, Q4 Readiness, Operational Excellence & Mentoring
+
+**Operational Leadership:**
+- Led scaling initiatives for Targeting with annual projection calculations
+- Led Q4 readiness initiative for TDS (2020) and guided team for 2021
+- Served as OE Samurai for MDO Symphony (15 months: 01/2020 - 04/2021)
+
+**Performance Testing:**
+- Conducted multiple single host load tests for Q4 2022 readiness
+- Identified optimal thresholds for CPU-based throttling
+
+**People Development:**
+- Mentored intern Mei Leng through successful project delivery and FTE offer
+- Demonstrated commitment to developing talent and ensuring career progression
+AI Agent & Agentic Systems:**
+- Action API for Multi-Device Target Recommendations (Production AI agent at scale)
+- Prompt Engineering with In-Context Learning for Music playback (90%+ test harness success)
+- RAG-like system with Endpoint Context injection
+- Agent workflow design with token optimization and caching strategies
+
+**MDO Space Projects:**
+- Vega Hypnos Launch (Vega support)
+- Spaces-based targeting for AV Gear (HRA implementation, AI agent signals)
+- Multi Device Environment Capabilities (Multi Device Capability Manager, Long-term design)
+
+**Global Selling Space Projects:**
+- OOC Invoice Service (HLD, LLD)
+- OOC Auto Disbursement
+
+**Key Technical Contributions:**
+- Architected Action API service (MCP-like architecture) for LLM tool calling
+- Designed prompts with systematic evaluation using test harness (90% benchmark)
+- Built signals pipeline (recency, proximity) for AI agent recommendations
+**Global Selling Space Projects:**
+- OOC Invoice Service (HLD, LLD)
+- OOC Auto Disbursement
+
+**Key Technical Contributions:**
+- AI Agent System Design:**
+- Action API architecture enabling LLM tool calling for production agent systems
+- Prompt engineering methodology: iterative refinement with test harness evaluation
+- Context optimization strategies: pre-computation, caching, token limiting via ranking/pagination
+- RAG-like patterns: enriched context injection for improved agent decision-making
+
+**Domain-Agnostic Design:**
+- S3A Rules for Media Portability designed to be domain agnostic, enabling broader applicability
+- Action API signals applicable across all Alexa domains
+- Worked on integration between Targeting and DR software
+
+**Legacy System Migration:**
+- Media Portability BI Metrics: Maintained SSDG table compatibility with TDS v1 while enriching TDS v2 context
+- Extended existing transformation logic and reused Athena queries for seamless transition
+- Explored payments platform and extended Deutsche Bank plugins for international disbursement
+
+**Strategic Impact:**
+- Architected production AI agent system handling all Alexa traffic for multi-device targetingign:**
+- S3A Rules for Media Portability designed to be domain agnostic, enabling broader applicability
+- Worked on integration between Targeting and DR software
+
+**Legacy System Migration:**
+- Media Portability BI Metrics: Maintained SSDG table compatibility with TDS v1 while enriching TDS v2 context
+- Extended existing transformation logic and reused Athena queries for seamless transition
+- Explored payments platform and extended Deutsche Bank plugins for international disbursement
+
+**Strategic Impact:**
+- Influenced skill selection component in DR, removing TDS v1 legacy bottleneck in targeting space  
+- Enabled I/O Decoupling support for multi-modal devices without requiring domain code changes
+- Led TT Campaign for library upgrades across teams
+
+**Stakeholder Management:**
+- Led working group of 20+ stakeholders for Vega/Hypnos project
+- Coordinated multiple Principal Engineers (torok, marklawr, kparames, sliwinsk) and Senior Engineers (ratikaa, guangzz, bennyk, glakshmi)
+- Drove consensus through multiple ACD & E Principal Office Hours and Design Review meetings
+- Resolved PlaybackStateReporter ownership debates, establishing Content Focus on RemoteVideoPlayer interface
+
+## Problem Solving & Adaptability
+
+**AV Gear Project Evolution:**
+- Initially proposed simplifier requiring Smarthome proposer changes
+- Adapted approach after feedback from Targeting and DR Principal Engineers
+- Redesigned to leverage DR levers (GCP, HRA) aligning with Task Instances/Skill Sessions vision
+- Achieved better long-term outcome aligned with North Star architecture
+
+**Multi Device Capabilities - Cross-Team Alignment:**
+- Faced challenges aligning multiple teams: Platform (AlexaService), Targeting, ADCS
+- Demonstrated persistence through iterative design refinements
+- Resolved contentious issues with dual approach: short-term and long-term solutions
+- Ensured I/O Decoupling project remained unblocked while preserving software evolution path
+
+---
+
+## Technical Leadership & Code Quality
+
+**Design Review Leadership:**
+- Led design reviews for: S3A Media Portability, BI Metrics, AV Gear project, Multi-device capabilities
+- Active participant in MDCS and TDS design reviews during Context merge and Media Portability projects
+- Led Q4 readiness process streamlining meetings
+- Regular participation in OE meetings for scaling and cost projections
+**Software Engineering Philosophy:**
+- Design-first approach: Always design solution before coding
+- Pattern-driven development: Identify and implement appropriate Design Patterns
+- Example: CHR Query optimization - refactored to Strategy pattern (CR-42691663) before optimization (CR-43659958, CR-45179772)
+
+**Code Quality Standards:**
+- Complete test coverage with functional programming concepts (immutability, pure functions - CR-2314465)
+- Write idiomatic, concise, and precise code (CR-15148561, CR-10104691)
+- Focus on readability and maintainability
+I have provided insightful code reviews insisting on things like using Design Patterns, improving readability, performance and maintainability of the code.  Below are few sample CRs:
+	•	Nischal's CR-56047656 - Java 8 best practices, better readability, simplified code, usage of null object pattern
+	•	Simon's CR-54174991 – Usage of pattens like Composition over Inheritance, ModelMapper etc
+	•	Sagar's CR-59372647 – Usages of improper Interfaces, Composition over inheritance for code sharing
+	•	Sagar’s CR-59325958 - Better readability of Java 8 code, Static code usage, avoiding code in test cases
+	•	Adeeb's CR-66087558 on TFS sync call - Signature cleaning, flattening Futures for better readability
+	•	Evan's CR-79864456 - Load Tests - Reuse request object and not club unrelated parameters which simplified the datastructures
+---
+
+## Cross-Team Influence & System Integration
+
+**S3A Rules - Multi-Team Coordination:**
+- **MDCS Team:** Ensured user targeted device signals and device roles passed correctly to Skill Session framework
+- **Music Team:** Integrated User targeted provider signals (Spotify, Amazon Music, etc.) into Skill Session framework
+- **DR Team:** Implemented sorting and filtering support for skill sessions based on last interaction time
+
+**Multi-Device Capabilities - Domain-Wide Impact:**
+- **ADCS Team:** Influenced getCapabilities API changes in DDRI library affecting all domains
+- **Platform Team:** Established voice request capability traffic routing through Alexa Service (later ACRS) post-decoupling
+- **Result:** All domains onboarded to I/O Decoupling without code changes via DDRI library update
+
+**Operational Excellence Initiatives:**
+- Led TDS and MDCS pipeline decoupling to reduce operational burden
+- Onboarded TDS packages to SonarQube for static code analysis
+- Integrated SonarQube with GoodCop for automated CR comments
+**People Development & Hiring:**
+- Active participation in hiring events and internal transfer loops
+- **Mentorship Success:** Guided intern Mei Leng through complete internship process
+  - Weekly 1:1 meetings for continuous support
+  - Streamlined onboarding process reducing ramp-up time
+  - Enhanced knowledge transfer on Targeting domain
+  - Successfully delivered internship project and secured FTE offer
+- Published 1-pager on MDO Targeting Model for ML-based targeting automation
+
+---
+
+## Detailed Project Analysis
+
+### Vega/Hypnos Launch - Technical Deep Dive
+
+**System Architecture Context:**
+VSK GA and Vega OS devices are v3 converged endpoints supporting both AVS/DCF/DDRI capabilities and v3/ASK capabilities. These endpoints enforce strict API compliance - no non-BR-approved, non-public-released APIs supported.
+
+**Impact Assessment:**
+Any MDX services with business logic depending on non-public-released Capability APIs required updates to prevent CX impact.
+
+**Implementation Strategy:**
+- Identified and implemented changes in all MDO owned services and libraries
+- Supported externally published APIs transition
+- Created intakes to ACRS (ACD-INTAKE-6) and ADS3 (ACD-INTAKE-9) for PSR focus support and PSR 3.0 onboarding
+
+**Challenge - Program Unblocking & Consensus Building:**
+
+*API Migration Complexity:*
+- Identified all deprecated APIs in Vega OS and mapped replacement APIs
+- Coordinated with API owners including Video and ACRS teams POCs
+- Catalogued deprecated internal APIs in Targeting services (TDS v1, TDS v2, MDCS) and libraries (TargetController)
+- Led project execution by task assignment to meet 08/05 deadline
+
+*Architectural Incompatibility Discovery:*
+- Identified PlaybackStateReporter API v3.0 incompatibility with DDRI libraries
+- Discovered fundamental architecture change: Vega devices individual app state reporting vs. Non-Vega aggregated host reporting
+- Impact: Broke multiple cloud services (Targeting, DR, Focus reporting)
+
+*Stakeholder Leadership (20+ participants):*
+- **Principal Engineers:** torok, marklawr, kparames, sliwinsk
+- **Senior Engineers:** ratikaa, guangzz, bennyk, glakshmi
+- Led working group meetings in ACD & E Principal Office Hours and Design Reviews
+- Proposed three solutions for cloud services Vega device targeting/routing
+- **Resolution:** Drove consensus for PlaybackStateReporter support via Content Focus on RemoteVideoPlayer interface
+
+### Session Shortlister Rules - Technical Deep Dive
+
+**Framework Overview:**
+Skill Session Shortlister: Transient recommendation framework influencing skill session selection for candidates with identical <Interpretation, Provider, Agent>.
+
+**Use Case Implementation:**
+- **Move Scenarios:** Music transfer between devices/spaces - S3A rules select skill session with music stream origin
+- **Resume Scenarios:** Skill session selection based on device recency and proximity to user
+
+**Signal Integration Strategy:**
+- **MDCS Integration:** User targeted device signals (explicit user device targeting)  
+- **Music Integration:** User targeted provider signals (Spotify, Amazon Music, etc.) via Cortex
+- **S3A Framework Enhancement:** Added interaction time-based sorting support
+
+**Cross-Team Coordination:**
+- Collaborated with Music, MDCS, and DR teams for signal pipeline design
+- Worked with PMs/TPMs for use case analysis and rule formulation
+- Classified trigger conditions using slot data, recency, and proximity signals
+
+**Technical Implementation:**
+- **Implicit Use Cases:** CR-54949691
+- **Explicit Use Cases:** CR-55642533, CR-55727584  
+- **Fallback Rules:** CR-56160422 (error condition handling with null skill session selection)
+
+**Architectural Innovation:**
+- Designed domain-agnostic rules for broad applicability across Alexa ecosystem
+- **Strategic Impact:** Eliminated Targeting/TDS v1 bottleneck for Multi-device support
+- Enabled faster customer feature delivery through S3A DR lever implementation
+
+**Challenge - Framework Pioneering:**
+
+*Scenario Classification Complexity:*
+- Reverse-engineered multiple scenarios to establish rule categories
+- Led partner team meetings (MDCS, Music, DR) for signal integration requirements
+
+*New Framework Stability:*
+- First S3A DR lever rule implementation - framework in early development
+- Established daily sync office hours with DR team for blocker resolution
+- Compensated for limited metrics/logging with comprehensive local unit testing
+- Successfully deployed after integration camp configuration adjustments
+
+*Requirements Leadership:*
+- Drove DR framework enhancements: sorting strategies, interaction timestamps, recency time buckets
+- Influenced framework evolution to support targeting use cases
+
+
+### Spaces-Based Targeting for AV Gear - Technical Deep Dive
+
+**Customer Experience Scope:**
+AV Gear targeting enabling implicit, explicit, and device-type targeting for AV Gear endpoints supporting:
+- **Control (Continuation):** Customer control of active AV gear audio/video experiences  
+- **Resume:** Experience resumption on recently suspended endpoints
+
+**Design Evolution - Iterative Approach:**
+
+*Phase 1 - Simplifier Design (March 6, 2020):*
+- Led meetings with AV Gear team and Targeting PE (Prashant)
+- Initial design: Panda Overrides/Focus Proposer/CFIR with TDS v2
+- **Strategic Pivot:** Discarded simplifier after stakeholder feedback for superior long-term architecture
+
+*Phase 2 - Long-term Architecture (May 15, 2020):*
+- Collaborated with Hyprank team, DR PE (Steve Saunders), Targeting PE (Prashant)
+- Implemented Task Instances and HRAs for cross-domain scalability
+
+**Technical Implementation:**
+- **MDCS Integration:** CHR device proximity and recency signal provision
+- **Feature Engineering:** Hyprank modifications (CR-27877213, CR-28762092)
+- **Categorization Framework:** 4 distinct categories based on signals and requirements
+- **Documentation:** Comprehensive wiki guidelines for Intent rule writing, recency/proximity integration, and automated script usage
+- **Future-Proofing:** Task Instance signal architecture enabling domain-agnostic onboarding (CR-30314267, CR-31713518) 
+
+**Performance Optimization - CHRS Integration:**
+
+*Problem Identification:*
+- New CHRS dependency in TDS and MDCS created performance bottleneck
+- TDS v2: 4 CHRS calls per request
+  - 2 calls: User appliance discovery (full DDB table scan)
+  - 1 call: Group endpoints retrieval  
+  - 1 call: Direct entity ID lookup
+
+*Solution Strategy:*
+- Implemented response caching for appliance discovery calls
+- Eliminated redundant CHRS calls through intelligent reuse
+- **Result:** 50% reduction in CHRS calls (4 → 2 per request)
+
+*Technical Implementation:*
+- **Code Architecture:** TDS Core refactoring using Strategy pattern (CR-42691663)
+- **Strategy 1 (Control):** No new dependency calls (CHRS, AERS, AVCS)
+- **Strategy 2 (T1 Treatment):** Cached CHRS calls with intelligent reuse (CR-43659958, CR-45179772)
+- **MDCS Enhancement:** Structured context preparation with Voice/Event traffic strategies (CR-46328804)
+
+**Challenge - Framework Migration Complexity:**
+
+*Intent Routing Signal Pipeline:* DR was in the midst of migration of their framework to DR levers from Intent Registry and Focus based proposers and recency and proximity-based signals from MDCS had to be passed to DR. Within DR, these signals were then passed to Hyprank and I did the feature engineering changes and then also made the changes to AVGear Commons and Category 1 and Category 2 Intent changes. The other big challenge with the design was the support from Hyprank framework in which the rules had to be written using Ruler Engine and it didn’t provide the constructs like looping and index of operations and the HRA rules had to be modified to bucketize the recency and proximity signals in order to select the hypothesis for AV Gear.
+I had to go through the codebase of both TDS Context Core and MDC Library and make the changes in both the libraries as the MDC migration was in progress. Instead of just reducing the calls directly with multiple branches in the code, I refactored the code into strategy pattern to increase the readability, maintainability and extensibility of the code. After the refactoring was complete, the CHR query optimization was simplified and the changes became minimal. It also allowed to easily deprecate the control code once the weblab is dialed up.
+
+
+
+	•	Capabilities in Multi Device Environment
+Speechlets check the capabilities of the device and issue the directives. For an I/O Decoupled device, the capability check will only provide the capabilities of the source device and not the capabilities of the visual target. However, it also needs to check the capabilities for the (visual) target device for creating correct directives. In this project, the main goal was to minimize the changes that the 100s of speechlets have to do in order to reduce the churn. The next goal was to reduce any latency impact for the capability fetches and finally to retain the pure get capabilities API in DDRI library to minimize changes with speechlets. The design proposal was to route all the voice request getCapabilities calls to AlexaService which acted as an aggregator and provided the capabilities of visual target in case the request is a visual request. I worked with ADCS team on the possibilities of creating a new API for merged capabilities either in ADCS or TDS. I worked with Alexa Service team which was in the process of getting decoupled into multiple services to have a long-term plan for I/O Decoupling with the usage of Task Instances. I made the changes on the DDRI side(CR-14245839)  and service side (Alexa Service - CR-15148561) and introduced a Capability Interface Provider with Null object refactoring to handle the capabilities call for the remote invocation displaying the best coding practices and design patterns.
+
+Ambiguity: The biggest challenge was to work with multiple teams on this project at the time of design including Targeting for handling I/O decouple logic, ADCS for managing capabilities of devices, AlexaService for the aggregator logic. AlexaService was also in the process of decoupling which added to more challenges during the design. The other big challenge was to run a TT campaign with major Speechlets to consume the DDRI library with the forked logic in place in order to enable the I/O Decoupling support to all speechlets. In order to test these changes, I had to setup a physical device, AlexaService and DeeSOS, a Speechlet, TDS and AtochaLogParserService locall on the dev desktop environment and test it out for visual based utterance.
+
+
+	•	MP BI Metrics 
+TDS v1 publishes analytics data to Datamart which are used today to generate the Weekly Business Review Report (WBR) which gives insights on different targeting metrics. With Music migrating to TDS v2 with Media Portability, continuity in the generated metrics have to be established. However, TDS v2 was not onboarded to Datamart for publishing the metrics. In this project, I worked on onboarding TDS v2 to Datamart to get the necessary metrics for parity. The fields that were getting saved in TDS v1 were very limited and I didn’t want to limit the fields that were getting published to Datamart from TDS v2 as Datamart with coldplay acts as an excellent place for introspecting the context which provides invaluable information during debugging. With this scope in mind, I designed the schema that has to be published to Datamart ground up and went through every field of request, response, context and any fields related to the TDS engine. I took the lead in the design and after reviewing these fields with the team and Principal Engineer (kparames), the schema for publishing data to Datamart was finalized. The parity with TDS v1 metrics was also established with new SSDG tables to support the WBR metrics and reports required by the product. I also worked with the Datamart team to onboard the new Content type and with Privacy and Legal team to complete the DSAR review of TDS v2.
+
+Ambiguity: The main ambiguity here was to include the information necessary for debugging the utterance without exceeding the 10 MB payload size limit of Datamart and to not to miss out on any information crucial for debugging the operation of TDS engine. I also worked with Datamart team to unblock TDS team from continuing with the development in the Q4 when the onboarding was stopped and before the completion of privacy and legal review so that the development could continue with the changes behind the weblab and tested without impacting the delivery schedules. I also worked with Privacy and Legal teams in parallel to revisit the privacy status of TDS v2 with the Datamart onboarding.
+
+
+	•	OOC Invoice Service
+For all Out of Country (OOC) Merchants, Amazon has to provide detailed information about each order to Deutsche Bank (DB) for their internal audit in order to comply with legal requirements. This project had three aspects (HLD, LLD) and I took the complete ownership in designing the software.
+- Create and Extract Invoice: The service was subscribed to events from Seller Event Aggregator (SEA) and the request to generate an invoice was placed to Beejak Service at the receipt of Ship Complete event from SEA- Data Assembler for Invoice: Beejak service would then trigger a HERD workflow and would call the Data Assembler in the SIL where OOC service would call downstream services like PCE to get the purchase document, Address Service for customer and merchant address and would generate the template and return the Blob for invoice creation (CR-830005, CR-821350)- Transfer of Invoice: On the receipt of Disbursement event from SEA, the transfer for invoice would get initiated and files would be transferred through SFTP channel to Deutsche BankThis service was designed from end to end by me and collaborated with multiple teams within Amazon including SEA, PCE, Beejak etc and with Deutsche Bank tech team outside Amazon.
+
+Ambiguity: This service had to be integrated to the systems outside of Amazon and the SFTP transfer was not being done by any other service. This service was also one of the first services to be onboarded to HEX in the org and used HEX pollers consumable environment for polling the SQS messages. This service was later extended to support onboarding for AGS merchant and Kindle as well. I also used Java 8 and Functional programming concepts and used ABCDA pattern for implementing the Service.
+
+After the initial launch, the Deutsche bank servers faced availability issues which reduced the success rates of OOC Invoice Service transfers, which also lead to this COE. In order to mitigate this issue, the SSH Sessions which were earlier being opened and closed for each file transfer was now stored in the Apache connection pool and shared across multiple files (CR-3711947). The file transfer was still secure and ensured that the SSH channel is opened only during the file transfer. With this change, the service availability and success rates increased to over 99% and with exponential back off retries in the poller, all the invoices could be successfully transferred after disbursement. I used Command pattern and Apache Connection pool to implement this pooling changes.
+
+	•	OOC Auto Disbursement
+When OOC project was launched, only two sellers were onboarded and the disbursements (payments) to sellers were made manually and this posed a challenge of onboarding more sellers without having to spend more effort in manual disbursements. In order to onboard more sellers, the disbursement had to be automated. The payments had to be disbursed from an OPGSP Nodal account and couldn’t use the workflow established for domestic sellers. In order to do automated disbursements, a new payment workflow was established. This was done primarily by adding a new business profile for OOC and writing a new plugin for OOC business in PCES to handle the disburse action. This plugin also handles the response from Deutsche Bank on the payment status. BeachService acts as an interface between Amazon and external financial entities like Bank and changes to Deutsche Bank Plugin were made to update the sender Id for OOC business and endpoints of Deutsche Bank for disbursement. I worked with multiple teams in Payments space including PCES (CR-1241052, CR-1497469), BEACH, IN Payments, Seller Events Aggregator (SEA).
+
+Ambiguity: The biggest ambiguity in enabling the automated payments were figuring out the plethora of services in Payments space and to support disbursements. This was equivalent to launching a new marketplace and needed changes in every service in the payments workflow.
+
+	•	Scaling, Q4 Readiness, OE and mentoring
+I created the scaling spreadsheet and updated the projection formulas in HEAT for TDS. I Lead the Q4 readiness initiative for TDS in 2020 with weekly sync up and checked the progress of the readiness in scrum daily. I was the OE samurai for MDO Symphony for 15 months from 01/2020 to 04/2021 where I regularly joined the CDO OE meeting and insisted on high standards in the team on OE practices. As part of the Q4 2022 readiness, I ran multiple single host load tests (1, 2, 3) to identify the right threshold for CPU based throttling. I have also mentored an intern – Mei Leng and she was able to deliver her internship project and secure an FTE offer. I was also a new hire buddy for a team member – Simon. I have also taken several interviews for hiring (internal transfers and external) 20+ in last two years and 54 in total. I also onboarded TDS to SonarQube for automated code analysis and integrated with GoodCop.
+
+
+	•	Vega/Hypnos Launch
+All the new interfaces on Vega/Hypnos were supported on cloud and the routing of traffic to Video domain for the Web video traffic was achieved. I created an integration testing sessions with POCs from Video (guangzz) and Middleware teams (bennyk) and verified the changes for Single device, multi device and multi domain scenarios. During the course of the integration testing, bugs on the device side changes were identified and were fixed successfully and the weblab was dialed up(MCM-69159490).
+
+	•	Session Shortlister Rules for Move and Resume
+The skill session shortlister rules is the basis of skill and eventually target selection for the Media Portability project and all the rules along with fallback rules were merged and started the skill selection for music seamlessly in the Integration Camp and Beta testing. The skill session-based rules were also submitted for IDF and was accepted.
+
+	•	Spaces based targeting support for AV Gear
+The HRA rules for AV Gear was merged for Category 1 & 2 and enabled Intent Routing for the AV gear devices and also with the feature engineering changes in the Hyprank platform, enabled other domains to use the Task Instance signals for HRA rules which also became a strong base for the Media Portability project which used Skill Session modelled after Task Instance. The number of calls from TDS to CHRS was reduced by two and reduced the scaling cost to downstream significantly.
+
+	•	Capabilities in Multi Device Environment
+Due to the changes in the DDRI library and Remote service for the multi device capabilities, 100+ speechlets were readily onboarded to I/O Decoupling out of the box with domain teams having to do no changes in their speechlets. This allowed the F3TV to be controlled by an echo.
+
+	•	OOC Invoice Service
+OOC Invoice service generates tens of thousands of invoices daily for all the OOC Merchants and does a secure FTP transfer over the wire to entity outside of Amazon (Deutsche Bank) automatically by removing any manual intervention needed in the case of Amazon Global Selling (AGS) merchant. The service built with the retries and DLQs mechanism made it fault tolerant. The scalability was ensured by onboarding to HEX pollers and was extended to include AGS and Kindle sellers as well later.
+
+	•	OOC Auto Disbursement
+The Auto Disbursement project allowed the onboarding and launch of the thousands of OOC merchants per week on IN Marketplace.
+
+	•	Vega/Hypnos launch
+With the Vega/Hypnos launch project, I earned trust of the stakeholders of multiple teams and was able to converge to the solution without risking the launch of the program. Due to the bias for action shown towards the timely delivery of the solution, the beta launch of the program was not impacted and went smoothly.
+
+	•	Session Shortlister Rules for Move and Resume
+As part of authoring the S3A, I demonstrated Invent and Simplify by categorizing all the scenarios of Move and Resume and by using the proximity and recency signals which could be extended for any domain. I also demonstrated Bias for action by actively working with the DR team and scheduling and driving open questions in the office hours. I also did not get blocked when the signals (such as User targeted Provider) was not available from the partner teams and still delivered the S3A rules in phases to unblock Integration camp and testing.
+
+	•	Spaces based targeting support for AV Gear
+During the AV Gear project, I took the ownership of the Intent Routing design and designed the HRA rules by grouping the scenarios to four categories. I also made the feature engineering changes as an away team member when the DR team was running short of resources to make the changes. I was curious and learnt about the DR levers and built consensus around using of the time buckets and proximity buckets for recency and proximity respectively amongst DR, Targeting and Smarthome teams. After having proposed the simplifier with bias for action for faster delivery, I disagreed and committed to a longer-term solution with the Hyprank and Task Instance as signals. I dived deep into TDS code base and refactored it to Strategy pattern and optimized the CHR query calls.
+
+	•	Capabilities in Multi Device Environment
+During the Multi device capabilities project, I had to develop consensus with ADCS, Platform (Alexa Service) and Targeting in order to finalize the API and design. I took the ownership in leading these design meetings. I was able to deliver the results by making the changes in the DDRI library and every speechlet was automatically onboarded to I/O Decoupling CX with a simple merge of the library. I also showed customer obsession by driving the TT campaign in order to encourage the domains to consume the DDRI library changes.
+
+	•	MP BI Metrics 
+I the BI Metrics parity project, I thought big and didn’t limit the scope of the project to be just the parity with v1 reporting, but expanded the data that would get stored in Datamart to include the complete context and the engine fields which would provide invaluable insights into ranking.
+
+	•	OOC Invoice Service
+I dove deep into the HEX Poller architecture and architected the service to onboard to HEX pollers for horizontal scaling of the service. I was able to deliver the results on time allowing invoices of the OOC merchants to be transferred for auditing and to be compliant. After the SFTP solution was identified to be flaky, I modified it by using the SFTP shared connection pool due to which I was able to Earn trust of the team.
+
+	•	OOC Auto Disbursement
+I demonstrated Customer Obsession with this project which enabled the international merchants to be launched in IN marketplace. I dived deep into the payments platform and identified the changes that needed to be done across plethora of Payments services in order to enable the auto disbursement which was equivalent to launching a new marketplace. I showed Bias for Action and regularly synced up with the Payment team’s POCs in their Office Hours to unblock the issues during the integration.
+
+	•	Scaling, Q4 Readiness, OE and mentoring
+I displayed ownership with the scaling and Q4 readiness. I also created a plan for streamlining all the Q4 activities throughout the year. I insisted on high standards as a OE samurai of MDO Symphony. I have also displayed hire and develop the best with mentoring of an intern – Mei Leng and having weekly sync ups on the blockers with intern and she was able to deliver her internship project and secure an FTE offer and with hiring by taking  20+ in last two years and 54 in total.
