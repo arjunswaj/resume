@@ -1,5 +1,5 @@
 name: 'Compile LaTeX'
-description: 'Compiles LaTeX document to PDF'
+description: 'Compiles LaTeX document to PDF inside the project devcontainer'
 inputs:
   root_file:
     description: 'Root LaTeX file to compile'
@@ -12,13 +12,17 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - name: Compile LaTeX document
-      uses: xu-cheng/latex-action@v2
-      with:
-        root_file: ${{ inputs.root_file }}
-        work_in_root_file_dir: true
-        continue_on_error: false
-    
+    - name: Compile LaTeX document in devcontainer
+      shell: bash
+      env:
+        ROOT_FILE: ${{ inputs.root_file }}
+      run: |
+        rm -f main.pdf
+        chmod +x .devcontainer/exec.sh
+        .devcontainer/exec.sh xelatex -interaction=nonstopmode "$ROOT_FILE"
+        .devcontainer/exec.sh xelatex -interaction=nonstopmode "$ROOT_FILE"
+        .devcontainer/exec.sh sh -c 'chmod -f a+rw *.pdf *.aux *.log *.out 2>/dev/null || true'
+
     - name: Debug compilation output
       shell: bash
       run: |
@@ -34,4 +38,5 @@ runs:
           ls -la main.pdf
         else
           echo "❌ main.pdf not found"
+          exit 1
         fi

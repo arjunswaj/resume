@@ -1,17 +1,20 @@
 # Agent Guidelines
 
+## Hard Rules — Devcontainer Only
+
+- **Run every LaTeX build and tool command inside the devcontainer** via `.devcontainer/exec.sh <cmd>`.
+- **Never run `xelatex`, `pdflatex`, `latexmk`, or builds on the host system.** You may edit source files on the host (the repository is bind-mounted at `/workspace` in the container), but all execution must happen in the slim TeX Live 2026 container.
+- `.devcontainer/exec.sh` locates the running container by the `devcontainer.local_folder` Docker label. If stopped, it starts the existing container; if none exists yet, it builds `.devcontainer/Dockerfile` and starts the container automatically.
+
 ## PDF Generation
 
-On macOS, use `xelatex` to compile the resume:
+Compile the resume inside the devcontainer using `xelatex`:
 
 ```bash
-eval "$(/usr/libexec/path_helper)" && xelatex -interaction=nonstopmode main.tex
+.devcontainer/exec.sh xelatex -interaction=nonstopmode main.tex
 ```
 
-Refer to `.vscode/tasks.json` for platform-specific build commands:
-- **macOS**: `xelatex`
-- **Linux**: `pdflatex`
-- **Windows**: `pdflatex`
+Both `.vscode/tasks.json` and the GitHub Actions composite action (`.github/actions/compile-latex/action.yml`) delegate PDF compilation to `.devcontainer/exec.sh xelatex -interaction=nonstopmode main.tex`.
 
 ## Resume Structure
 
