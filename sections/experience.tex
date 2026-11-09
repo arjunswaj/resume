@@ -1,45 +1,45 @@
 \section{Experience}
 \cventry[0.4em]{2024--Present}{Senior Software Engineer}{Microsoft Azure}{Mountain View}{}
-{Building secure, cloud-native compute platforms for Azure Resource Builder, processing billions of resource events for monitoring, compliance, and automation.\newline{}
+{Building secure, cloud-native compute platforms for Azure Resource Builder, processing billions of resource events for monitoring, compliance and automation.\newline{}
 \begin{itemize}
 \setlength\itemsep{0.5em}
     \item Azure Resource Builder Compute Platform
         \begin{itemize}
             \item Separated control and data planes to automate workspace provisioning, resource deployment and compute lifecycle management
             \item Integrated Apache Airflow for workflow-driven processing with explicit retries, error handling and partner-defined DAGs
-            \item Introduced containerized runtimes so partners can bring Flink, Spark and RisingWave without language lock-in
+            \item Introduced containerized runtimes on Kubernetes, enabling partners to run Flink, Spark and RisingWave without language lock-in
             \item Built the proof of concept, secured funding and led four engineers to deliver the platform with self-service onboarding
         \end{itemize}
     \item Developer Experience \& AI Tooling
         \begin{itemize}
             \item Created container solution for dynamic NuGet package updates with zero-downtime deployments
             \item Championed MCP servers for agentic workflows and custom prompts to speed up team development cycles
-            \item Deployed production services on AKS using Helm charts and multi-stage CI/CD pipelines
+            \item Deployed containerized services on AKS using Helm charts, with multi-stage CI/CD pipelines for build, test and release
         \end{itemize}
 \end{itemize}}
 
 \cventry[0.4em]{2015--2024}{Software Development Engineer}{Amazon}{Sunnyvale/Bengaluru}{}
-{Built large-scale distributed services in Java (\textasciitilde80\%) and Python (\textasciitilde20\%). Delivered low-latency APIs, payment systems and multi-device platforms.\newline{}
+{Built large-scale distributed services in Java (\textasciitilde80\%) and Python (\textasciitilde20\%) using Spring Boot and OOP design patterns. Delivered low-latency REST APIs, payment systems and multi-device platforms.\newline{}
 \begin{itemize}
 \setlength\itemsep{0.5em}
     \item AI-Powered Targeting \& Action APIs -- Alexa+
         \begin{itemize}
             \item Built production AI agent system with MCP-like architecture. Enabled LLM-based device targeting for Music, News and Video domains
-            \item Designed RAG-style context enrichment with token optimization and Redis caching
             \item Created prompt engineering pipelines with In-Context Learning. Achieved \textbf{90\%+ accuracy} through test harness evaluation
         \end{itemize}
     \item Cost \& Latency Optimization -- Music Recommendations
         \begin{itemize}
-            \item Rebuilt rule engine using composition and strategy patterns. Cut DynamoDB calls and \textbf{lowered costs by 50\%} with better tail latency
-            \item Shipped Java APIs handling millions of daily requests. Tuned latency budgets with retry-with-jitter to meet SLOs at peak load
+            \item Rebuilt rule engine using GoF patterns (Strategy, Composition). Cut database calls by 50\% and \textbf{lowered costs by 50\%} with optimized query patterns and improved tail latency
+            \item Shipped Java APIs handling millions of daily requests with tuned concurrency, connection pooling and retry-with-jitter to meet SLOs at peak load
         \end{itemize}
     \item Multi-Device Platforms \& Leadership
         \begin{itemize}
-            \item Led Vega OS working group with 20+ members (Principal Engineers, Senior Engineers, Product Managers). Aligned API behaviors across device and cloud stacks
-            \item Ran Q4 readiness with load tests, chaos tests and capacity planning. Mentored engineers on design patterns and test coverage
+            \item Served as tech lead for Vega OS working group with 20+ members (Principal Engineers, Senior Engineers, Product Managers). Drove API design alignment across device and cloud stacks
+            \item Ran Q4 readiness with load tests, chaos tests and capacity planning. Mentored engineers on GoF design patterns, JUnit testing and code quality
         \end{itemize}
     \item Invoice Generation -- Global Seller Platform
         \begin{itemize}
-            \item Built async invoice workflow using S3 and secure SFTP to Deutsche Bank. Added connection pooling for reliable bulk transfers
+            \item Built async invoice workflow generating millions of invoices and transfer it over a secure SFTP channel to Deutsche Bank for audits
+            \item Implemented connection pooling and Command pattern for fault-tolerant bulk transfers with 99\%+ success rate
         \end{itemize}
 \end{itemize}}
