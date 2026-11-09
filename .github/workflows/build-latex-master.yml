@@ -15,7 +15,7 @@ jobs:
       id-token: write
     
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     
     - name: Read version from version.txt
       id: version
@@ -46,7 +46,7 @@ jobs:
         fi
         
     - name: Upload PDF Artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: resume-pdf-latest
         path: resume-v${{ steps.version.outputs.version }}.pdf
@@ -58,7 +58,7 @@ jobs:
       run: echo "tag_name=release-$(date +'%Y%m%d-%H%M%S')" >> "$GITHUB_OUTPUT"
         
     - name: Create Release
-      uses: softprops/action-gh-release@v2
+      uses: softprops/action-gh-release@v3
       with:
         tag_name: ${{ steps.tag.outputs.tag_name }}
         name: Resume PDF ${{ steps.tag.outputs.tag_name }}
