@@ -1,0 +1,40 @@
+{
+  "name": "resume-latex (TeX Live 2026)",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "remoteUser": "root",
+  "postCreateCommand": "xelatex --version | head -n 1 && latexmk --version | head -n 2 && tlmgr --version | head -n 2",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "James-Yu.latex-workshop"
+      ],
+      "settings": {
+        "latex-workshop.latex.autoBuild.run": "onSave",
+        "latex-workshop.latex.recipe.default": "xelatex",
+        "latex-workshop.latex.recipes": [
+          {
+            "name": "xelatex",
+            "tools": [
+              "xelatex"
+            ]
+          }
+        ],
+        "latex-workshop.latex.tools": [
+          {
+            "name": "xelatex",
+            "command": "xelatex",
+            "args": [
+              "-interaction=nonstopmode",
+              "%DOC%.tex"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

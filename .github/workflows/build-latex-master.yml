@@ -20,8 +20,8 @@ jobs:
     - name: Read version from version.txt
       id: version
       run: |
-        VERSION=$(cat version.txt)
-        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        VERSION=$(tr -d '[:space:]' < version.txt)
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
         echo "Using version: $VERSION"
     
     - name: Compile LaTeX
@@ -30,12 +30,13 @@ jobs:
         root_file: main.tex
         
     - name: Verify PDF generation and rename with version
+      env:
+        VERSION: ${{ steps.version.outputs.version }}
       run: |
         if [ -f "main.pdf" ]; then
           echo "✅ PDF generated successfully"
           ls -la main.pdf
           # Rename PDF with version
-          VERSION="${{ steps.version.outputs.version }}"
           mv main.pdf "resume-v${VERSION}.pdf"
           echo "✅ PDF renamed to resume-v${VERSION}.pdf"
           ls -la "resume-v${VERSION}.pdf"
@@ -54,10 +55,10 @@ jobs:
     # Generate unique tag name to avoid conflicts
     - name: Generate tag name
       id: tag
-      run: echo "tag_name=release-$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_OUTPUT
+      run: echo "tag_name=release-$(date +'%Y%m%d-%H%M%S')" >> "$GITHUB_OUTPUT"
         
     - name: Create Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ steps.tag.outputs.tag_name }}
         name: Resume PDF ${{ steps.tag.outputs.tag_name }}
@@ -69,9 +70,10 @@ jobs:
         
     # Prepare deployment directory with PDF and landing page
     - name: Prepare GitHub Pages deployment
+      env:
+        VERSION: ${{ steps.version.outputs.version }}
       run: |
         mkdir -p deploy
-        VERSION="${{ steps.version.outputs.version }}"
         LAST_COMMIT_DATE=$(git log -1 --format=%cd --date=short)
         echo "Using version: $VERSION"
         echo "Last commit date: $LAST_COMMIT_DATE"
@@ -91,13 +93,12 @@ jobs:
         grep -E "(Version:|Last updated:|href=)" deploy/index.html
         
     - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: deploy
         destination_dir: .
         keep_files: false
-        include_cname: false
         publish_branch: gh-pages
         force_orphan: true
         enable_jekyll: false

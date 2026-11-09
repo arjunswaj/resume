@@ -12,13 +12,13 @@
 				"reveal": "silent"
 			},
 			"osx": {
-				"command": "eval \"$(/usr/libexec/path_helper)\" && xelatex -interaction=nonstopmode main.tex && open -a Preview main.pdf"
+				"command": ".devcontainer/exec.sh xelatex -interaction=nonstopmode main.tex && open -a Preview main.pdf"
 			},
 			"linux": {
-				"command": "pdflatex -interaction=nonstopmode main.tex && xdg-open main.pdf"
+				"command": "if [ -f /.dockerenv ]; then xelatex -interaction=nonstopmode main.tex; else .devcontainer/exec.sh xelatex -interaction=nonstopmode main.tex && xdg-open main.pdf; fi"
 			},
 			"windows": {
-				"command": "pdflatex -interaction=nonstopmode main.tex"
+				"command": "bash .devcontainer/exec.sh xelatex -interaction=nonstopmode main.tex"
 			}
 		}
 	]

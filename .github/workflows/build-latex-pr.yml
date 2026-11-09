@@ -21,8 +21,8 @@ jobs:
     - name: Read version from version.txt
       id: version
       run: |
-        VERSION=$(cat version.txt)
-        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        VERSION=$(tr -d '[:space:]' < version.txt)
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
         echo "Using version: $VERSION"
     
     - name: Compile LaTeX
@@ -31,13 +31,14 @@ jobs:
         root_file: main.tex
         
     - name: Verify PDF generation and rename with version
+      env:
+        VERSION: ${{ steps.version.outputs.version }}
+        PR_NUMBER: ${{ github.event.number }}
       run: |
         if [ -f "main.pdf" ]; then
           echo "✅ PDF generated successfully"
           ls -la main.pdf
           # Rename PDF with version and PR number for test releases
-          VERSION="${{ steps.version.outputs.version }}"
-          PR_NUMBER="${{ github.event.number }}"
           mv main.pdf "resume-v${VERSION}-pr-${PR_NUMBER}.pdf"
           echo "✅ PDF renamed to resume-v${VERSION}-pr-${PR_NUMBER}.pdf"
           ls -la "resume-v${VERSION}-pr-${PR_NUMBER}.pdf"
@@ -55,7 +56,7 @@ jobs:
 
     # TEST: Try release creation in PR (will be draft)
     - name: Test Release Creation
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         tag_name: test-pr-${{ github.event.number }}
         name: Test Release PR-${{ github.event.number }}
@@ -68,10 +69,11 @@ jobs:
 
     # TEST: Prepare deployment directory
     - name: Test GitHub Pages deployment preparation
+      env:
+        VERSION: ${{ steps.version.outputs.version }}
+        PR_NUMBER: ${{ github.event.number }}
       run: |
         mkdir -p test-deploy
-        VERSION="${{ steps.version.outputs.version }}"
-        PR_NUMBER="${{ github.event.number }}"
         LAST_COMMIT_DATE=$(git log -1 --format=%cd --date=short)
         echo "Using version: $VERSION"
         echo "PR number: $PR_NUMBER"
@@ -95,7 +97,7 @@ jobs:
 
     # TEST: Try GitHub Pages deployment
     - name: Test GitHub Pages Deployment
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: test-deploy
